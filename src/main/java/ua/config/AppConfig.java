@@ -10,7 +10,7 @@ import ua.repository.impl.UserRepositoryImpl;
 @Configuration
 public class AppConfig {
     @Bean
-    public UserRepository shopRepository(JdbcTemplate jdbcTemplate) {
+    public UserRepository userRepository(JdbcTemplate jdbcTemplate) {
         return new UserRepositoryImpl(jdbcTemplate);
     }
 }
