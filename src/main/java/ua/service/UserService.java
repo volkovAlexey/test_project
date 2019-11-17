@@ -1,13 +1,8 @@
 package ua.service;
 
 import ua.domain.User;
+import ua.service.basic.BasicService;
 
-public interface UserService {
-    User addUser(User user);
-
-    User getUser(Long id);
-
-    void delete(Long id);
-
-    User update(Long id, User user);
+public interface UserService extends BasicService<Long, User> {
+    User addUser(User user, Long addressId);
 }
