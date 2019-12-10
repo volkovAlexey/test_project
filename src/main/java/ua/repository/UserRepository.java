@@ -1,13 +1,14 @@
 package ua.repository;
 
 import ua.domain.User;
+import ua.repository.basic.BasicRepository;
 
-public interface UserRepository {
+public interface UserRepository extends BasicRepository<Long, User> {
     User insert(User user, Long addressId);
 
-    User getUser(Long id);
+    User getUserByNameAndPassword(String name, String password);
 
-    User update(Long id, User user);
+    User getUserByName(String name);
 
-    void delete(Long id);
+    User getUserByEmail(String email);
 }

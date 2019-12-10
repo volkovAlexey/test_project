@@ -3,6 +3,8 @@ package ua.service;
 import ua.domain.Address;
 import ua.service.basic.BasicService;
 
-public interface AddressService extends BasicService {
-    Address addOne(Address address);
+import java.util.List;
+
+public interface AddressService extends BasicService<Long, Address> {
+    Address addOne(Address address, Long regionId);
 }

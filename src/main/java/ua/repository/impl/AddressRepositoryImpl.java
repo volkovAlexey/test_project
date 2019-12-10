@@ -1,6 +1,7 @@
 package ua.repository.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -30,24 +31,25 @@ public class AddressRepositoryImpl extends AbstractRepository implements Address
     }
 
     @Override
-    public Address addOne(Address address) {
+    public Address insert(Address address, Long regionId) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection
-                    .prepareStatement("INSERT INTO addresses (country, region, city)" +
-                            " VALUES (?, ?, ?)", new String[]{"id"});
-            ps.setString(1, address.getCountry());
-            ps.setString(2, address.getRegion());
-            ps.setString(3, address.getCity());
+                    .prepareStatement("INSERT INTO addresses (city, region_id)" +
+                            " VALUES (?, ?)", new String[]{"id"});
+            ps.setString(1, address.getCity());
+            ps.setLong(2, regionId);
             return ps;
         }, keyHolder);
-        long addressId = keyHolder.getKey().longValue();
-        return getOne(addressId);
+        long id = keyHolder.getKey().longValue();
+        return getOne(id);
     }
 
     @Override
     public Address getOne(Long id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM addresses WHERE id = ?", ROW_MAPPER, id);
+        List<Address> result = jdbcTemplate.query(
+                "SELECT * FROM addresses WHERE id = ?", ROW_MAPPER, id);
+        return DataAccessUtils.singleResult(result);
     }
 
     @Override
@@ -56,9 +58,9 @@ public class AddressRepositoryImpl extends AbstractRepository implements Address
     }
 
     @Override
-    public Address update(Long id, Address address) {
-        jdbcTemplate.update("UPDATE addresses SET country = ?, region = ?, city = ? WHERE id = ?",
-                address.getCountry(), address.getRegion(), address.getCity(), id);
-        return getOne(id);
+    public Address update(Long regionId, Address address) {
+        jdbcTemplate.update("UPDATE addresses SET city = ?, region_id = ? WHERE id = ?",
+                address.getCity(), regionId, address.getId());
+        return getOne(address.getId());
     }
 }

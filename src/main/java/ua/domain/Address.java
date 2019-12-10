@@ -3,32 +3,32 @@ package ua.domain;
 import java.util.Objects;
 
 public class Address {
-    private String country;
-    private String region;
+    private Long id;
+    private Region region;
     private String city;
 
     public Address() {
     }
 
-    public Address(String country, String region, String city) {
-        this.country = country;
+    public Address(Long id, Region region, String city) {
+        this.id = id;
         this.region = region;
         this.city = city;
     }
 
-    public String getCountry() {
-        return country;
+    public Long getId() {
+        return id;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getRegion() {
+    public Region getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+    public void setRegion(Region region) {
         this.region = region;
     }
 
@@ -45,14 +45,13 @@ public class Address {
         if (this == o) return true;
         if (!(o instanceof Address)) return false;
         Address address = (Address) o;
-        return Objects.equals(getCountry(), address.getCountry()) &&
+        return Objects.equals(getId(), address.getId()) &&
                 Objects.equals(getRegion(), address.getRegion()) &&
                 Objects.equals(getCity(), address.getCity());
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(getCountry(), getRegion(), getCity());
+        return Objects.hash(getId(), getRegion(), getCity());
     }
 }

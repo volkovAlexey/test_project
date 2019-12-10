@@ -3,14 +3,14 @@ package ua.domain;
 import java.util.Objects;
 
 public class User {
-    private String name;
+    private String userName;
     private String password;
     private String email;
     private Address address;
     private Long id;
 
-    public User(String name, String password, String email, Address address, Long id) {
-        this.name = name;
+    public User(String userName, String password, String email, Address address, Long id) {
+        this.userName = userName;
         this.password = password;
         this.email = email;
         this.address = address;
@@ -20,12 +20,12 @@ public class User {
     public User() {
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -65,7 +65,7 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return Objects.equals(getName(), user.getName()) &&
+        return Objects.equals(getUserName(), user.getUserName()) &&
                 Objects.equals(getPassword(), user.getPassword()) &&
                 Objects.equals(getEmail(), user.getEmail()) &&
                 Objects.equals(getAddress(), user.getAddress()) &&
@@ -75,6 +75,11 @@ public class User {
     @Override
     public int hashCode() {
 
-        return Objects.hash(getName(), getPassword(), getEmail(), getAddress(), getId());
+        return Objects.hash(getUserName(), getPassword(), getEmail(), getAddress(), getId());
+    }
+
+    @Override
+    public String toString() {
+        return userName;
     }
 }
